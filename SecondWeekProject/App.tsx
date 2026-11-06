@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Screens
 import HomeScreen from './src/screens/Home';
@@ -13,12 +14,15 @@ import ProfileScreen from './src/screens/Profile';
 import ProductDetailsScreen from './src/screens/ProductDetails';
 import LoginScreen from './src/screens/Login';
 import SignupScreen from './src/screens/Sign';
+import CheckoutScreen from './src/screens/Checkout';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 // 1. Official Bottom Tab Navigator with Vector Ionicons
 function MainTabs() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -26,8 +30,8 @@ function MainTabs() {
         tabBarActiveTintColor: '#00a896',
         tabBarInactiveTintColor: '#94a3b8',
         tabBarStyle: {
-          height: 60,
-          paddingBottom: 8,
+          height: 60 + insets.bottom,
+          paddingBottom: Math.max(insets.bottom, 8),
           paddingTop: 6,
           backgroundColor: '#fff',
           borderTopWidth: 1,
@@ -90,19 +94,20 @@ function MainTabs() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* Main Tabs */}
-        <Stack.Screen name="MainTabs" component={MainTabs} />
+      <Stack.Navigator
+        initialRouteName="Login"
+        screenOptions={{ headerShown: false }}>
 
-        {/* Product Details Screen */}
-        <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
-
-        {/* Direct Cart screen access */}
-        <Stack.Screen name="Cart" component={CartScreen} />
-
-        {/* Auth Screens */}
+        {/* ✅ Auth Screens — Login pehle khulega */}
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
+
+        {/* ✅ Main App — Login ke baad */}
+        <Stack.Screen name="MainTabs" component={MainTabs} />
+        <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+        <Stack.Screen name="Cart" component={CartScreen} />
+        <Stack.Screen name="Checkout" component={CheckoutScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

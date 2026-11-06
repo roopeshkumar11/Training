@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ProductDetailsScreen = () => {
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
+  const insets = useSafeAreaInsets();
 
   // API se aane wala real product data
   const product = route.params?.product || {
@@ -100,8 +102,8 @@ const ProductDetailsScreen = () => {
           {/* Price & Quantity Row */}
           <View style={styles.priceRow}>
             <Text style={styles.price}>
-              ${product.price}{' '}
-              <Text style={styles.currencyText}>USD</Text>
+              ₹{product.price}{' '}
+              <Text style={styles.currencyText}>INR</Text>
             </Text>
 
             {/* Quantity Counter */}
@@ -159,7 +161,7 @@ const ProductDetailsScreen = () => {
       </ScrollView>
 
       {/* Bottom Add to Cart Button */}
-      <View style={styles.bottomBar}>
+      <View style={[styles.bottomBar, { paddingBottom: 16 + insets.bottom }]}>
         <TouchableOpacity
           style={styles.addToCartBtn}
           onPress={() => {
@@ -189,7 +191,7 @@ const ProductDetailsScreen = () => {
           }}>
           <Ionicons name="cart" size={20} color="#fff" style={{ marginRight: 8 }} />
           <Text style={styles.addToCartText}>
-            Add to Cart • ${(product.price * quantity).toFixed(2)}
+            Add to Cart • ₹{(product.price * quantity).toFixed(2)}
           </Text>
         </TouchableOpacity>
       </View>

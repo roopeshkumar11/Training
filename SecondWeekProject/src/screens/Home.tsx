@@ -177,10 +177,6 @@ const HomeScreen = ({ navigation, route }: any) => {
       <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
         {/* Top Header */}
         <View style={styles.header}>
-          <TouchableOpacity style={styles.iconBtn}>
-            <Ionicons name="menu-outline" size={26} color="#1a202c" />
-          </TouchableOpacity>
-
           <Text style={styles.headerTitle}>E-Commerce</Text>
 
           <TouchableOpacity

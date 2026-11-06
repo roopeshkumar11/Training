@@ -42,7 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onPress }) => {
 
       {/* Price & Rating with Ionicons */}
       <View style={styles.priceRatingRow}>
-        <Text style={styles.productPrice}>${product.price}</Text>
+        <Text style={styles.productPrice}>₹{product.price}</Text>
         {product.rating ? (
           <View style={styles.ratingRow}>
             <Ionicons name="star" size={13} color="#f59e0b" style={styles.starIcon} />

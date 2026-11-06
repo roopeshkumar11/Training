@@ -6,9 +6,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Alert,
 } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface CartItem {
   id: number;
@@ -21,6 +21,8 @@ interface CartItem {
 }
 
 const CartScreen = ({ navigation, route }: any) => {
+  const insets = useSafeAreaInsets();
+
   // Initial cart items ko empty rakha hai (koi fake items nahi)
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
@@ -92,7 +94,7 @@ const CartScreen = ({ navigation, route }: any) => {
           </Text>
           <TouchableOpacity
             style={styles.shopNowBtn}
-            onPress={() => navigation.navigate('Home')}>
+            onPress={() => navigation.navigate('MainTabs', { screen: 'Home' })}>
             <Text style={styles.shopNowBtnText}>Start Shopping</Text>
           </TouchableOpacity>
         </View>
@@ -115,7 +117,7 @@ const CartScreen = ({ navigation, route }: any) => {
                   <Text style={styles.itemMeta}>
                     Size: {item.size}   Color: {item.color}
                   </Text>
-                  <Text style={styles.itemPrice}>${item.price}</Text>
+                  <Text style={styles.itemPrice}>₹{item.price}</Text>
                 </View>
 
                 {/* Counter */}
@@ -144,22 +146,18 @@ const CartScreen = ({ navigation, route }: any) => {
           </ScrollView>
 
           {/* Checkout Section at Bottom */}
-          <View style={styles.checkoutSection}>
+          <View style={[styles.checkoutSection, { paddingBottom: 14 + insets.bottom }] }>
             <View>
               <Text style={styles.totalLabel}>Total price</Text>
-              <Text style={styles.totalAmount}>${totalPrice.toFixed(2)}</Text>
+              <Text style={styles.totalAmount}>₹{totalPrice.toFixed(2)}</Text>
             </View>
 
             <TouchableOpacity
               style={styles.checkoutBtn}
               onPress={() =>
-                Alert.alert(
-                  'Order Placed! 🎉',
-                  `Total: $${totalPrice.toFixed(2)}\nThank you for shopping!`,
-                  [{ text: 'OK', onPress: () => setCartItems([]) }],
-                )
+                navigation.navigate('Checkout', { totalPrice })
               }>
-              <Text style={styles.checkoutBtnText}>Checkout</Text>
+              <Text style={styles.checkoutBtnText}>🛒 Buy Now</Text>
             </TouchableOpacity>
           </View>
         </>
