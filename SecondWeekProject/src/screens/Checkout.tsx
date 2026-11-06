@@ -24,6 +24,47 @@ const C = {
   error: '#ef4444',
 };
 
+type InputFieldProps = {
+  label: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  placeholder: string;
+  keyboardType?: 'default' | 'email-address' | 'phone-pad' | 'number-pad';
+  error?: string;
+  icon: string;
+  maxLength?: number;
+};
+
+function CheckoutInputField({
+  label,
+  value,
+  onChangeText,
+  placeholder,
+  keyboardType,
+  error,
+  icon,
+  maxLength,
+}: InputFieldProps) {
+  return (
+    <View style={styles.fieldWrapper}>
+      <Text style={styles.label}>{label}</Text>
+      <View style={[styles.inputRow, error ? styles.inputError : null]}>
+        <Ionicons name={icon} size={18} color={error ? C.error : C.primary} style={styles.inputIcon} />
+        <TextInput
+          style={styles.input}
+          value={value}
+          onChangeText={onChangeText}
+          placeholder={placeholder}
+          placeholderTextColor="#a0aec0"
+          keyboardType={keyboardType || 'default'}
+          maxLength={maxLength}
+        />
+      </View>
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+    </View>
+  );
+}
+
 const CheckoutScreen = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const totalPrice = route.params?.totalPrice ?? 0;
@@ -68,27 +109,6 @@ const CheckoutScreen = ({ navigation, route }: any) => {
       ],
     );
   };
-
-  const InputField = ({
-    label, value, onChangeText, placeholder, keyboardType, error, icon, maxLength,
-  }: any) => (
-    <View style={styles.fieldWrapper}>
-      <Text style={styles.label}>{label}</Text>
-      <View style={[styles.inputRow, error ? styles.inputError : null]}>
-        <Ionicons name={icon} size={18} color={error ? C.error : C.primary} style={styles.inputIcon} />
-        <TextInput
-          style={styles.input}
-          value={value}
-          onChangeText={onChangeText}
-          placeholder={placeholder}
-          placeholderTextColor="#a0aec0"
-          keyboardType={keyboardType || 'default'}
-          maxLength={maxLength}
-        />
-      </View>
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
-    </View>
-  );
 
   return (
     <KeyboardAvoidingView
@@ -136,7 +156,7 @@ const CheckoutScreen = ({ navigation, route }: any) => {
               <Text style={styles.sectionTitle}>Delivery Address</Text>
             </View>
 
-            <InputField
+            <CheckoutInputField
               label="Full Name *"
               value={fullName}
               onChangeText={setFullName}
@@ -144,7 +164,7 @@ const CheckoutScreen = ({ navigation, route }: any) => {
               icon="person-outline"
               error={errors.fullName}
             />
-            <InputField
+            <CheckoutInputField
               label="Phone Number *"
               value={phone}
               onChangeText={setPhone}
@@ -154,7 +174,7 @@ const CheckoutScreen = ({ navigation, route }: any) => {
               error={errors.phone}
               maxLength={10}
             />
-            <InputField
+            <CheckoutInputField
               label="Email Address *"
               value={email}
               onChangeText={setEmail}
@@ -163,7 +183,7 @@ const CheckoutScreen = ({ navigation, route }: any) => {
               icon="mail-outline"
               error={errors.email}
             />
-            <InputField
+            <CheckoutInputField
               label="House / Flat / Street Address *"
               value={address}
               onChangeText={setAddress}
@@ -171,7 +191,7 @@ const CheckoutScreen = ({ navigation, route }: any) => {
               icon="home-outline"
               error={errors.address}
             />
-            <InputField
+            <CheckoutInputField
               label="Landmark (Optional)"
               value={landmark}
               onChangeText={setLandmark}
@@ -181,7 +201,7 @@ const CheckoutScreen = ({ navigation, route }: any) => {
 
             <View style={styles.row}>
               <View style={{ flex: 1, marginRight: 8 }}>
-                <InputField
+                <CheckoutInputField
                   label="City *"
                   value={city}
                   onChangeText={setCity}
@@ -191,7 +211,7 @@ const CheckoutScreen = ({ navigation, route }: any) => {
                 />
               </View>
               <View style={{ flex: 1, marginLeft: 8 }}>
-                <InputField
+                <CheckoutInputField
                   label="State *"
                   value={state}
                   onChangeText={setState}
@@ -202,7 +222,7 @@ const CheckoutScreen = ({ navigation, route }: any) => {
               </View>
             </View>
 
-            <InputField
+            <CheckoutInputField
               label="Pincode *"
               value={pincode}
               onChangeText={setPincode}
