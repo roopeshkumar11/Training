@@ -33,10 +33,10 @@ const HomeScreen = ({ navigation, route }: any) => {
   const scrollRef = useRef<any>(null);
   const searchTimerRef = useRef<any>(null);
 
-  // Total pages calculate karna
+  // Calculate total pages
   const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE) || 1;
 
-  // Helper: Current base URL get karna
+  // Helper: Get current base URL
   const getBaseUrl = (cat: string, search: string) => {
     if (search.trim() !== '') {
       return `https://dummyjson.com/products/search?q=${search.trim()}`;
@@ -70,13 +70,13 @@ const HomeScreen = ({ navigation, route }: any) => {
       });
   };
 
-  // Page change handler (Next / Previous button dabane par)
+  // Page change handler
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
     const baseUrl = getBaseUrl(selectedCategory, searchQuery);
     fetchProducts(baseUrl, newPage);
 
-    // Page change hote hi products ke upar scroll karein
+    // Scroll to products on page change
     scrollRef.current?.scrollTo({ y: 240, animated: true });
   };
 
@@ -170,6 +170,7 @@ const HomeScreen = ({ navigation, route }: any) => {
     if (categoryFromTab) {
       handleCategorySelect(categoryFromTab);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryFromTab]);
 
   return (

@@ -99,7 +99,7 @@ const CheckoutScreen = ({ navigation, route }: any) => {
   const handlePlaceOrder = () => {
     if (!validate()) return;
     Alert.alert(
-      '🎉 Order Placed Successfully!',
+      'Order Placed Successfully!',
       `Thank you, ${fullName}!\n\nYour order of ₹${totalPrice.toFixed(2)} will be delivered to:\n${address}, ${city}, ${state} - ${pincode}\n\nPayment: ${paymentMethod.toUpperCase()}`,
       [
         {

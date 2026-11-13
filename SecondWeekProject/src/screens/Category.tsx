@@ -13,7 +13,7 @@ const CategoryScreen = ({ navigation }: any) => {
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // API se categories fetch karna
+  // Fetch categories from API
   useEffect(() => {
     fetch('https://dummyjson.com/products/category-list')
       .then(response => response.json())
@@ -27,7 +27,7 @@ const CategoryScreen = ({ navigation }: any) => {
       });
   }, []);
 
-  // Category name ko clean format karna (e.g., "mens-shirts" -> "Mens Shirts")
+  // Format category name (e.g., "mens-shirts" -> "Mens Shirts")
   const formatCategoryName = (name: string) => {
     return name
       .replace(/-/g, ' ')
@@ -41,7 +41,7 @@ const CategoryScreen = ({ navigation }: any) => {
         <Text style={styles.headerTitle}>Categories</Text>
       </View>
 
-      {/* Loading state ya List */}
+      {/* Loading state or List */}
       {loading ? (
         <View style={styles.loadingCenter}>
           <ActivityIndicator size="large" color="#00a896" />

@@ -41,7 +41,7 @@ function MainTabs() {
           fontSize: 11,
           fontWeight: '600',
         },
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused, color, size: _size }) => {
           let iconName: any = 'home';
 
           if (route.name === 'Home') {
@@ -98,11 +98,11 @@ function App() {
         initialRouteName="Login"
         screenOptions={{ headerShown: false }}>
 
-        {/* ✅ Auth Screens — Login pehle khulega */}
+        {/* Auth Screens */}
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
 
-        {/* ✅ Main App — Login ke baad */}
+        {/* Main App */}
         <Stack.Screen name="MainTabs" component={MainTabs} />
         <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
         <Stack.Screen name="Cart" component={CartScreen} />

@@ -23,10 +23,10 @@ interface CartItem {
 const CartScreen = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
-  // Initial cart items ko empty rakha hai (koi fake items nahi)
+  // Initial cart items
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  // ProductDetails screen se naya item add hone par cart update karna
+  // Update cart when new item is added from ProductDetails
   useEffect(() => {
     if (route.params?.newItem) {
       const newItem = route.params.newItem;
@@ -42,7 +42,7 @@ const CartScreen = ({ navigation, route }: any) => {
     }
   }, [route.params?.newItem]);
 
-  // Quantity increase
+  // Increase item quantity
   const increaseQty = (id: number) => {
     setCartItems(prev =>
       prev.map(item =>
@@ -51,7 +51,7 @@ const CartScreen = ({ navigation, route }: any) => {
     );
   };
 
-  // Quantity decrease ya remove
+  // Decrease item quantity or remove
   const decreaseQty = (id: number) => {
     setCartItems(prev =>
       prev
@@ -62,7 +62,7 @@ const CartScreen = ({ navigation, route }: any) => {
     );
   };
 
-  // Item poora remove karna
+  // Remove item completely
   const removeItem = (id: number) => {
     setCartItems(prev => prev.filter(item => item.id !== id));
   };
@@ -157,7 +157,7 @@ const CartScreen = ({ navigation, route }: any) => {
               onPress={() =>
                 navigation.navigate('Checkout', { totalPrice })
               }>
-              <Text style={styles.checkoutBtnText}>🛒 Buy Now</Text>
+              <Text style={styles.checkoutBtnText}>Buy Now</Text>
             </TouchableOpacity>
           </View>
         </>

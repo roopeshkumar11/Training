@@ -17,7 +17,7 @@ const ProductDetailsScreen = () => {
   const route = useRoute<any>();
   const insets = useSafeAreaInsets();
 
-  // API se aane wala real product data
+  // Product data from route parameters
   const product = route.params?.product || {
     title: 'Product Details',
     price: 99,

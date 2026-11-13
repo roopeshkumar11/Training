@@ -61,7 +61,7 @@ const SignupScreen = () => {
     setTimeout(() => {
       setLoading(false);
       Alert.alert(
-        '🎉 Account Created!',
+        'Account Created!',
         `Welcome, ${name}!\nYour account has been created successfully.`,
         [{ text: 'Login Now', onPress: () => navigation.navigate('Login') }],
       );

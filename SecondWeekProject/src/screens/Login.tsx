@@ -16,7 +16,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 
 // ─── App Color Palette ───────────────────────────────────
 const C = {
-  primary: '#00a896',       // teal - main brand color (app ke saath match)
+  primary: '#00a896',       // teal - main brand color
   primaryDark: '#007a6e',   // darker teal for gradient effect
   primaryLight: '#e6f7f5',  // very light teal for input backgrounds
   white: '#ffffff',
