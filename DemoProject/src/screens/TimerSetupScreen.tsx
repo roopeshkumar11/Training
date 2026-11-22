@@ -93,7 +93,12 @@ export const TimerSetupScreen: React.FC<TimerSetupScreenProps> = ({
         </View>
 
         {/* Bottom Actions Area */}
-        <View style={styles.bottomSection}>
+        <View
+          style={[
+            styles.bottomSection,
+            { paddingBottom: Math.max(insets.bottom, 16) + 8 },
+          ]}
+        >
           <TouchableOpacity
             style={styles.startButton}
             activeOpacity={0.85}
@@ -111,9 +116,7 @@ export const TimerSetupScreen: React.FC<TimerSetupScreenProps> = ({
           </TouchableOpacity>
 
           {/* Home Indicator */}
-          <View style={styles.homeIndicatorWrapper}>
-            <View style={styles.homeIndicator} />
-          </View>
+         
         </View>
       </View>
     </SafeAreaView>

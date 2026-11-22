@@ -102,7 +102,12 @@ export const ActiveMovementScreen: React.FC<ActiveMovementScreenProps> = ({
         </View>
 
         {/* White Card */}
-        <View style={styles.bottomCard}>
+        <View
+          style={[
+            styles.bottomCard,
+            { paddingBottom: Math.max(insets.bottom, 16) + 12 },
+          ]}
+        >
           <Text style={styles.progressHeading}>Good Progress</Text>
           <Text style={styles.progressSubtext}>
             This is what self-trust looks like
@@ -118,9 +123,7 @@ export const ActiveMovementScreen: React.FC<ActiveMovementScreenProps> = ({
           </TouchableOpacity>
 
           {/* Home Bar Indicator */}
-          <View style={styles.homeIndicatorWrapper}>
-            <View style={styles.homeIndicator} />
-          </View>
+          
         </View>
       </View>
     </View>

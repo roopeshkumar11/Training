@@ -118,7 +118,15 @@ export const BreathingScreen: React.FC<BreathingScreenProps> = ({
     <View style={styles.rootContainer}>
       <StatusBar barStyle="dark-content" />
 
-      <View style={[styles.contentContainer, { paddingTop: topPadding }]}>
+      <View
+        style={[
+          styles.contentContainer,
+          {
+            paddingTop: topPadding,
+            paddingBottom: Math.max(insets.bottom, 16) + 8,
+          },
+        ]}
+      >
         {/* TOP HEADER */}
         <View style={styles.headerRow}>
           <View style={styles.headerLeft}>
@@ -224,10 +232,6 @@ export const BreathingScreen: React.FC<BreathingScreenProps> = ({
               </View>
             )}
           </TouchableOpacity>
-
-          <View style={styles.homeIndicatorWrapper}>
-            <View style={styles.homeIndicator} />
-          </View>
         </View>
       </View>
     </View>
@@ -403,7 +407,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
     elevation: 4,
-    marginBottom: 16,
+    marginBottom: 8,
   },
   pauseBars: {
     flexDirection: 'row',
@@ -421,16 +425,5 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#8447C7',
     marginLeft: 3,
-  },
-  homeIndicatorWrapper: {
-    alignItems: 'center',
-    paddingTop: 4,
-  },
-  homeIndicator: {
-    width: 134,
-    height: 5,
-    borderRadius: 2.5,
-    backgroundColor: '#1E1638',
-    opacity: 0.8,
   },
 });

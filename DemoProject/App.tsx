@@ -20,8 +20,8 @@ export type ScreenName =
   | 'productDetail';
 
 export default function App() {
-  // Set to 'audioPlayer' so user can review the new Audio Player screen directly
-  const [currentScreen, setCurrentScreen] = useState<ScreenName>('audioPlayer');
+  // Default initial screen is 'welcome'
+  const [currentScreen, setCurrentScreen] = useState<ScreenName>('welcome');
   const [selectedMinutes, setSelectedMinutes] = useState<number>(3);
 
   const renderActiveScreen = () => {
@@ -83,7 +83,12 @@ export default function App() {
           />
         );
       default:
-        return <ActiveMovementScreen onClose={() => setCurrentScreen('timerSetup')} />;
+        return (
+          <WelcomeScreen
+            onGetStarted={() => setCurrentScreen('home')}
+            onLogin={() => setCurrentScreen('home')}
+          />
+        );
     }
   };
 

@@ -6,10 +6,12 @@ import {
   TouchableOpacity,
   Dimensions,
   StatusBar,
+  ScrollView,
 } from 'react-native';
 import Video from 'react-native-video';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 // Exact sampled colors from the Figma design
 const BG_COLOR = '#16104E'; // Deep midnight royal indigo
@@ -25,13 +27,15 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
   onGetStarted,
   onLogin,
 }) => {
+  const insets = useSafeAreaInsets();
   const [agreedToTerms, setAgreedToTerms] = useState<boolean>(false);
+  const bottomInset = Math.max(insets.bottom, 16);
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
 
-      {/* Top Video Section - Extends down ~62% of screen */}
+      {/* Top Video Section - Extends down ~52% of screen */}
       <View style={styles.videoWrapper}>
         <Video
           source={require('../../assets/0_Abstract_Liquid_Metal_1280x720.mp4')}
@@ -49,8 +53,18 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
         <View style={styles.fadeLayer4} />
       </View>
 
-      {/* Bottom Content Area */}
-      <View style={styles.contentContainer}>
+      {/* SafeArea-aware Scrollable Bottom Content Area */}
+      <ScrollView
+        contentContainerStyle={[
+          styles.contentContainer,
+          {
+            paddingBottom: bottomInset + 12,
+            paddingTop: insets.top > 0 ? insets.top + 16 : 16,
+          },
+        ]}
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Title Block */}
         <View style={styles.headingBlock}>
           <Text style={styles.titleText}>
@@ -99,7 +113,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
             <Text style={styles.termsLink}>Terms & Privacy Policy</Text>
           </Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -115,7 +129,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: height * 0.62,
+    height: height * 0.52,
     overflow: 'hidden',
     backgroundColor: '#0F093C',
   },
@@ -164,10 +178,9 @@ const styles = StyleSheet.create({
     backgroundColor: BG_COLOR,
   },
   contentContainer: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'flex-end',
     paddingHorizontal: 22,
-    paddingBottom: 24,
   },
   headingBlock: {
     marginBottom: 22,

@@ -74,7 +74,15 @@ export const AudioPlayerScreen: React.FC<AudioPlayerScreenProps> = ({
       <View style={styles.bottomSolidBase} pointerEvents="none" />
 
       {/* Main Content */}
-      <View style={[styles.contentContainer, { paddingTop: topPadding }]}>
+      <View
+        style={[
+          styles.contentContainer,
+          {
+            paddingTop: topPadding,
+            paddingBottom: Math.max(insets.bottom, 16) + 8,
+          },
+        ]}
+      >
         {/* TOP HEADER: Frosted Back Button & Close Button */}
         <View style={styles.headerRow}>
           <TouchableOpacity
@@ -171,9 +179,7 @@ export const AudioPlayerScreen: React.FC<AudioPlayerScreenProps> = ({
           </View>
 
           {/* Home Indicator */}
-          <View style={styles.homeIndicatorWrapper}>
-            <View style={styles.homeIndicator} />
-          </View>
+          
         </View>
       </View>
     </View>

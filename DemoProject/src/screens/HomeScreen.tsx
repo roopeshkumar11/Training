@@ -68,7 +68,10 @@ export const HomeScreen: React.FC<{
       <View style={styles.rootContainer}>
         <ScrollView
           style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
+          contentContainerStyle={[
+            styles.scrollContent,
+            { paddingBottom: 40 + Math.max(insets.bottom, 16) },
+          ]}
           showsVerticalScrollIndicator={false}
         >
           {/* Lavender Header Container (Wraps User Info & Mood Card) */}
@@ -245,7 +248,12 @@ export const HomeScreen: React.FC<{
         </ScrollView>
 
         {/* Custom Bottom Wave Navigation Bar */}
-        <View style={styles.bottomNavContainer}>
+        <View
+          style={[
+            styles.bottomNavContainer,
+            { paddingBottom: Math.max(insets.bottom, 10) },
+          ]}
+        >
           <View style={styles.bottomNavWaveOverlay}>
             {/* Left Elevated Home Button with Arch */}
             <TouchableOpacity

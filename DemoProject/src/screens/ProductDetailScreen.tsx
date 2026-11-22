@@ -235,7 +235,7 @@ export const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({
       <View
         style={[
           styles.bottomActionBar,
-          { paddingBottom: Platform.OS === 'ios' ? 24 : 14 },
+          { paddingBottom: Math.max(insets.bottom, 14) + 6 },
         ]}
       >
         {/* Quantity Stepper */}
