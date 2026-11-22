@@ -1,11 +1,10 @@
 /**
- * Login.test.tsx - Login Screen Testing
+ * Login.test.tsx - Tested with React Native Testing Library
  * Verifies email/password inputs and form validation on empty submission.
  */
 
 import React from 'react';
-import ReactTestRenderer from 'react-test-renderer';
-import { Text, TouchableOpacity, TextInput } from 'react-native';
+import { render, screen, fireEvent } from '@testing-library/react-native';
 import LoginScreen from '../src/screens/Login';
 
 // Mock navigation
@@ -17,37 +16,22 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('LoginScreen', () => {
-  // Test 1: Check inputs
-  it('renders email and password input fields', () => {
-    let renderer: any;
-    ReactTestRenderer.act(() => {
-      renderer = ReactTestRenderer.create(<LoginScreen />);
-    });
+  it('renders email and password input fields', async () => {
+    await render(<LoginScreen />);
 
-    const inputs = renderer.root.findAllByType(TextInput);
-    expect(inputs.length).toBe(2);
+    expect(screen.getByPlaceholderText('yourname@email.com')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Enter your password')).toBeTruthy();
   });
 
-  // Test 2: Check validation
-  it('displays validation errors when submitting an empty form', () => {
-    let renderer: any;
-    ReactTestRenderer.act(() => {
-      renderer = ReactTestRenderer.create(<LoginScreen />);
-    });
+  it('displays validation errors when submitting an empty form', async () => {
+    await render(<LoginScreen />);
 
-    // Find and press Login button
-    const loginButton = renderer.root.findAllByType(TouchableOpacity).find((btn: any) => {
-      const texts = btn.findAllByType(Text);
-      return texts.some((t: any) => t.props.children === 'Login');
-    });
+    // Click Login button using user-facing text
+    const loginButton = screen.getByText('Login');
+    fireEvent.press(loginButton);
 
-    ReactTestRenderer.act(() => {
-      loginButton.props.onPress();
-    });
-
-    // Verify error messages
-    const textNodes = renderer.root.findAllByType(Text).map((t: any) => String(t.props.children));
-    expect(textNodes).toContain('Email is required');
-    expect(textNodes).toContain('Password is required');
+    // findByText waits for state update to complete
+    expect(await screen.findByText('Email is required')).toBeTruthy();
+    expect(screen.getByText('Password is required')).toBeTruthy();
   });
 });

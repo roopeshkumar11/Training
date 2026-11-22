@@ -1,11 +1,10 @@
 /**
- * ProductCard.test.tsx - ProductCard Component Testing
+ * ProductCard.test.tsx - Tested with React Native Testing Library
  * Verifies that the card displays title, price, and handles press events.
  */
 
 import React from 'react';
-import ReactTestRenderer from 'react-test-renderer';
-import { Text, TouchableOpacity } from 'react-native';
+import { render, screen, fireEvent } from '@testing-library/react-native';
 import ProductCard from '../src/components/ProductCard';
 
 describe('ProductCard Component', () => {
@@ -16,41 +15,19 @@ describe('ProductCard Component', () => {
     thumbnail: 'https://example.com/shoes.jpg',
   };
 
-  // Test 1: Check title and price rendering
-  it('renders product title and price correctly', () => {
-    let renderer: any;
-    ReactTestRenderer.act(() => {
-      renderer = ReactTestRenderer.create(
-        <ProductCard product={mockProduct} onPress={jest.fn()} />
-      );
-    });
+  it('renders product title and price correctly', async () => {
+    await render(<ProductCard product={mockProduct} onPress={jest.fn()} />);
 
-    const root = renderer.root;
-    const textNodes = root.findAllByType(Text);
-    const textList = textNodes.map((node: any) =>
-      Array.isArray(node.props.children)
-        ? node.props.children.join('')
-        : String(node.props.children)
-    );
-
-    expect(textList).toContain('Running Shoes');
-    expect(textList.some((t: string) => t.includes('1999'))).toBe(true);
+    expect(screen.getByText('Running Shoes')).toBeTruthy();
+    expect(screen.getByText('₹1999')).toBeTruthy();
   });
 
-  // Test 2: Check click event
-  it('calls onPress callback when card is tapped', () => {
+  it('calls onPress callback when card is tapped', async () => {
     const onPressMock = jest.fn();
-    let renderer: any;
-    ReactTestRenderer.act(() => {
-      renderer = ReactTestRenderer.create(
-        <ProductCard product={mockProduct} onPress={onPressMock} />
-      );
-    });
+    await render(<ProductCard product={mockProduct} onPress={onPressMock} />);
 
-    const touchable = renderer.root.findByType(TouchableOpacity);
-    ReactTestRenderer.act(() => {
-      touchable.props.onPress();
-    });
+    // Click using user-facing text
+    fireEvent.press(screen.getByText('Running Shoes'));
 
     expect(onPressMock).toHaveBeenCalledTimes(1);
   });

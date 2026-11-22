@@ -1,26 +1,20 @@
 /**
- * Profile.test.tsx - Profile Screen Testing
+ * Profile.test.tsx - Tested with React Native Testing Library
  * Verifies that the screen displays user information and menu items.
  */
 
 import React from 'react';
-import ReactTestRenderer from 'react-test-renderer';
-import { Text } from 'react-native';
+import { render, screen } from '@testing-library/react-native';
 import ProfileScreen from '../src/screens/Profile';
 
 describe('ProfileScreen', () => {
-  it('renders user details and profile menu options', () => {
+  it('renders user details and profile menu options', async () => {
     const navigationMock = { replace: jest.fn() };
-    let renderer: any;
-    ReactTestRenderer.act(() => {
-      renderer = ReactTestRenderer.create(<ProfileScreen navigation={navigationMock} />);
-    });
+    await render(<ProfileScreen navigation={navigationMock} />);
 
-    const textNodes = renderer.root.findAllByType(Text).map((t: any) => String(t.props.children));
-
-    expect(textNodes).toContain('My Profile');
-    expect(textNodes).toContain('Roopesh Kumar');
-    expect(textNodes).toContain('My Orders');
-    expect(textNodes).toContain('Log Out');
+    expect(screen.getByText('My Profile')).toBeTruthy();
+    expect(screen.getByText('Roopesh Kumar')).toBeTruthy();
+    expect(screen.getByText('My Orders')).toBeTruthy();
+    expect(screen.getByText('Log Out')).toBeTruthy();
   });
 });
