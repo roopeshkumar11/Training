@@ -1,97 +1,61 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# React Native Learning Hub 🚀
 
-# Getting Started
+A single modular React Native project to practice and organize multiple topics without creating a new project every time.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 📁 Project Structure
 
-## Step 1: Start Metro
-
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+```text
+App/
+├── App.tsx                                  # React Navigation Stack setup
+├── src/
+│   ├── types.ts                             # Topic & Category types
+│   ├── screens/
+│   │   └── HomeScreen.tsx                   # Main screen listing all topics
+│   └── topics/
+│       ├── index.ts                         # Central registry of all topics
+│       └── 04_OfflineFirst/
+│           └── OfflineNotesApp.tsx          # Offline-First Notes App (SQLite)
 ```
 
-## Step 2: Build and run your app
+## ✨ Features
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+- **Single Project, Multiple Topics**: Every topic lives inside `src/topics/` and appears automatically on the Home Screen.
+- **React Navigation**: Uses `@react-navigation/native-stack` for native screen transitions and back navigation.
+- **Included Topic — Offline-First Architecture (Notes App)**:
+  - Local persistence using **SQLite** (`react-native-sqlite-storage`)
+  - `notes` and `queue` tables in `notes.db`
+  - Offline mutations queue (`ADD` / `DELETE`)
+  - Background sync & timestamp-based conflict resolution
 
-### Android
+## 🚀 Getting Started
 
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+### 1. Install dependencies
+```bash
+npm install
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+### 2. Run on Android
+```bash
+npx react-native run-android
 ```
 
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
+### 3. Run on iOS
+```bash
+cd ios && pod install && cd ..
+npx react-native run-ios
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## ➕ How to Add a New Topic
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+1. Create a new component inside `src/topics/<TopicFolder>/MyTopic.tsx`.
+2. Register it in `src/topics/index.ts`:
+```ts
+{
+  id: 'my-topic',
+  title: 'My New Topic',
+  category: 'Basics',
+  description: 'Short description of the topic.',
+  component: MyTopic,
+}
 ```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+3. Save and reload — it automatically appears on the Home Screen and becomes a navigable screen.
